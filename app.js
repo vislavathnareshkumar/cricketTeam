@@ -72,8 +72,7 @@ app.post("/players/", async (request, response) => {
 
   const result = await db.run(addplayer);
 
-  response.send(result);
-  console.log(result);
+  response.send("Player Added to Team");
 });
 
 //API 3
@@ -102,8 +101,6 @@ app.get("/players/:playerId/", async (request, response) => {
   };
 
   response.send(finalPlayer);
-
-  console.log("hello");
 });
 
 //API 4
@@ -128,3 +125,20 @@ app.put("/players/:playerId/", async (request, response) => {
 
   response.send("Player Details Updated");
 });
+
+app.delete("/players/:playerId/", async (request, response) => {
+  const playerId = request.params;
+
+  const deletePlayer = `
+    DELETE FROM 
+    cricket_team
+    WHERE
+    player_id = {playerId} 
+    `;
+
+  await db.run(deletePlayer);
+
+  response.send("Player Removed");
+});
+
+module.exports = app;

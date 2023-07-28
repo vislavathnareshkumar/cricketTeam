@@ -8,8 +8,19 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/players/1/
+GET http://localhost:3000/players/1
+
 
 ###
 
-POST http://localhost:3000/players/1/
+PUT hhtp://localhost:3000/players/1
+Content-Type: application/json
+
+{
+  "playerName": "Maneesh",
+  "jerseyNumber": 54,
+  "role": "All-rounder"
+}
+###
+
+DELETE http://localhost:3000/1
