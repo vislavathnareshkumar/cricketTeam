@@ -133,7 +133,7 @@ app.delete("/players/:playerId/", async (request, response) => {
     DELETE FROM 
     cricket_team
     WHERE
-    player_id = {playerId} 
+    player_id = ${playerId} 
     `;
 
   await db.run(deletePlayer);
