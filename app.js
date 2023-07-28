@@ -27,6 +27,8 @@ const intializeDBAndServer = async () => {
 
 intializeDBAndServer();
 
+//API 1
+
 app.get("/players/", async (request, response) => {
   const getPlayers = `
     SELECT 
@@ -50,6 +52,8 @@ app.get("/players/", async (request, response) => {
   response.send(player);
 });
 
+//API 2
+
 app.post("/players/", async (request, response) => {
   const playerDetail = request.body;
   const { playerName, jerseyNumber, role } = playerDetail;
@@ -70,4 +74,57 @@ app.post("/players/", async (request, response) => {
 
   response.send(result);
   console.log(result);
+});
+
+//API 3
+
+app.get("/players/:playerId/", async (request, response) => {
+  const playerId = request.params;
+
+  const playerQuery = `
+    
+    SELECT
+    *
+    FROM
+    cricket_team
+    WHERE
+    player_id = ${playerId}`;
+
+  const player = await db.get(playerQuery);
+
+  const finalPlayer = (player) => {
+    return {
+      playerId: player.player_id,
+      playerName: player.player_name,
+      jerseyNumber: player.jersey_number,
+      role: player.role,
+    };
+  };
+
+  response.send(finalPlayer);
+
+  console.log("hello");
+});
+
+//API 4
+
+app.put("/players/:playerId/", async (request, response) => {
+  const playerId = request.params.playerId;
+
+  const { playerName, jerseyNumber, role } = request.body;
+
+  const playerUpdateQuery = `
+    UPDATE
+    cricket_team
+    SET
+    player_name= '${playerName}',
+    jersey_number = ${jerseyNumber},
+    role = '${role}'
+    
+    
+    `;
+
+  const playerupdated = await db.run(playerUpdateQuery);
+
+  response.send("Player Details Updated");
 });
